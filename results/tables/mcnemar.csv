@@ -1,0 +1,5 @@
+reference (best val F1),compared with,seed,ref right / other wrong,ref wrong / other right,p (exact McNemar),p Bonferroni
+EfficientNetV2-S,MobileNetV3-Small,42,67,21,9.203075999074402e-07,3.681230399629761e-06
+EfficientNetV2-S,ResNet-50,42,25,22,0.7708669945730263,1.0
+EfficientNetV2-S,ConvNeXt-Tiny,42,12,24,0.06524533522315325,0.260981340892613
+EfficientNetV2-S,Swin-T,42,23,21,0.880395821280672,1.0

@@ -1,0 +1,17 @@
+\begin{table}[t]
+\centering
+\caption{Additional test-set metrics (single run, seed 42; point estimates).}
+\label{tab:extended}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lccccccc}
+\toprule
+Model & Balanced Acc. (\%) & Weighted-F1 (\%) & MCC & Kappa & Top-3 Acc. (\%) & ECE (\%) & NLL \\
+\midrule
+MobileNetV3-Small & 79.67 & 94.93 & 0.95 & 0.95 & 98.07 & 8.90 & 0.27 \\
+ResNet-50 & 80.64 & 96.86 & 0.97 & 0.97 & 99.08 & 8.73 & 0.21 \\
+EfficientNetV2-S & 84.35 & 97.09 & 0.97 & 0.97 & 99.12 & 9.15 & 0.20 \\
+ConvNeXt-Tiny & 83.64 & \textbf{97.58} & \textbf{0.98} & \textbf{0.98} & \textbf{99.17} & 8.81 & \textbf{0.18} \\
+Swin-T & \textbf{84.44} & 97.00 & 0.97 & 0.97 & 98.86 & \textbf{8.40} & 0.20 \\
+\bottomrule
+\end{tabular}}
+\end{table}

@@ -1,0 +1,21 @@
+true,predicted,count,share_of_true_class_%
+thirps on  cotton,Wilt,3,60.0
+Wheat black rust,Wheat Brown leaf rust,3,12.5
+Sugarcane Healthy,Healthy Wheat,3,4.109589041095891
+Wheat scab,Wheat powdery mildew,2,12.5
+Wheat leaf blight,Yellow Rust Sugarcane,2,7.407407407407407
+Wheat aphid,Healthy Wheat,2,6.896551724137931
+Anthracnose on Cotton,bacterial_blight in Cotton,2,50.0
+maize stem borer,maize fall armyworm,2,14.285714285714286
+American Bollworm on Cotton,Army worm,2,28.571428571428573
+Leaf smut,Brownspot,2,25.0
+maize fall armyworm,Army worm,1,6.25
+maize ear rot,Healthy Wheat,1,5.555555555555555
+maize fall armyworm,Wheat Stem fly,1,6.25
+maize fall armyworm,maize ear rot,1,6.25
+Anthracnose on Cotton,Leaf smut,1,25.0
+American Bollworm on Cotton,maize fall armyworm,1,14.285714285714286
+bollrot on Cotton,thirps on  cotton,1,100.0
+cotton mealy bug,American Bollworm on Cotton,1,7.142857142857143
+cotton mealy bug,maize ear rot,1,7.142857142857143
+cotton mealy bug,Wheat scab,1,7.142857142857143

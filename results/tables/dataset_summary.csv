@@ -1,0 +1,45 @@
+label,train,val,test,total
+American Bollworm on Cotton,30,7,7,44
+Anthracnose on Cotton,21,4,4,29
+Army worm,228,49,49,326
+Bacterial Blight in cotton,179,38,38,255
+Becterial Blight in Rice,944,202,202,1348
+Brownspot,874,187,187,1248
+Common_Rust,926,198,199,1323
+Cotton Aphid,186,40,40,266
+Flag Smut,73,16,16,105
+Gray_Leaf_Spot,402,86,86,574
+Healthy Maize,827,177,177,1181
+Healthy Wheat,225,48,48,321
+Healthy cotton,392,84,84,560
+Leaf Curl,265,57,57,379
+Leaf smut,39,9,8,56
+Mosaic sugarcane,272,59,58,389
+RedRot sugarcane,412,89,88,589
+RedRust sugarcane,52,11,11,74
+Rice Blast,678,145,146,969
+Sugarcane Healthy,342,73,73,488
+Tungro,916,196,196,1308
+Wheat Brown leaf Rust,62,14,14,90
+Wheat Brown leaf rust,11,2,2,15
+Wheat Stem fly,120,26,26,172
+Wheat aphid,136,29,29,194
+Wheat black rust,111,24,24,159
+Wheat leaf blight,123,26,27,176
+Wheat mite,134,29,29,192
+Wheat powdery mildew,147,32,32,211
+Wheat scab,72,16,16,104
+Wheat___Yellow_Rust,64,14,14,92
+Wilt,277,59,59,395
+Yellow Rust Sugarcane,346,74,74,494
+bacterial_blight in Cotton,330,71,71,472
+bollrot on Cotton,2,0,1,3
+bollworm on Cotton,7,1,1,9
+cotton mealy bug,63,14,14,91
+cotton whitefly,38,8,8,54
+maize ear rot,81,17,18,116
+maize fall armyworm,76,16,16,108
+maize stem borer,67,14,14,95
+pink bollworm in cotton,16,3,3,22
+red cotton bug,49,10,10,69
+thirps on  cotton,25,6,5,36

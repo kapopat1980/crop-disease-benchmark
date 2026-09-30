@@ -1,0 +1,13 @@
+# Core dependencies of crop_disease_benchmark.py.
+# Exact versions used in the paper are recorded in environment.json of the original run
+# (see docs/REPRODUCIBILITY.md); lower bounds below are what the script's APIs require.
+torch>=2.1            # torch.utils.flop_counter.FlopCounterMode
+torchvision>=0.16     # models.*_Weights.DEFAULT API, Swin-T / ConvNeXt / EfficientNetV2
+numpy
+pandas
+scipy
+scikit-learn
+matplotlib
+seaborn
+pillow
+tqdm

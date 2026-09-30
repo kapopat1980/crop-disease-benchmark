@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use this code or the result files, please cite the associated paper (and this repository)."
+title: "Crop disease and pest recognition benchmark: code and results"
+type: software
+version: 1.0.0
+date-released: "2026-09-30"
+authors:
+  - family-names: "[TODO: Surname]"
+    given-names: "[TODO: Given name]"
+    orcid: "https://orcid.org/[TODO-0000-0000-0000-0000]"
+    affiliation: "[TODO: Institution, city, country]"
+repository-code: "https://github.com/[TODO-user]/crop-disease-benchmark"
+license: MIT
+keywords:
+  - plant disease recognition
+  - deep learning
+  - ConvNeXt
+  - Swin Transformer
+  - class imbalance
+  - model calibration
+# preferred-citation:   # <- uncomment and fill in once the paper has a DOI
+#   type: article
+#   title: "[TODO: paper title]"
+#   journal: "[TODO: journal]"
+#   year: 2026
+#   doi: "[TODO]"
