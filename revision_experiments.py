@@ -45,6 +45,7 @@ import argparse
 import gc
 import json
 import math
+import os
 import sys
 import time
 import warnings
@@ -99,6 +100,7 @@ CROP = {
     "Leaf Curl": "Cotton",   # VERIFY
     "Army worm": "Any",      # VERIFY: folder does not name a crop; "Any" = allowed under every crop mask
 }
+CROP.update(json.loads(os.environ.get("CDB_CROP_OVERRIDE", "{}")))  # optional override from the notebook
 
 
 def crop_of(label: str) -> str:
