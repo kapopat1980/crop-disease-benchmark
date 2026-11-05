@@ -1,0 +1,13 @@
+{
+  "model": "MobileNetV3-Small",
+  "variant": "ce_ls",
+  "lr_backbone": 3e-05,
+  "best_epoch": 20,
+  "epochs_run": 20,
+  "train_time_min": 30.983988352616628,
+  "n_train": 10347,
+  "n_val": 1937,
+  "n_test": 0,
+  "val_f1": 0.7707841990139424,
+  "val_acc": 0.926690758905524
+}
