@@ -1,0 +1,13 @@
+{
+  "pairs_total": 13628,
+  "pairs_phash": 6892,
+  "pairs_embedding": 13093,
+  "pairs_both": 6357,
+  "pairs_cross_label": 68,
+  "images_in_groups_gt1": 7123,
+  "groups_gt1": 2134,
+  "largest_group": 65,
+  "grouping_basis": "phash_or_embedding",
+  "orig_split_cross_pairs": 6547,
+  "orig_test_images_with_neardup_outside_test": 1009
+}

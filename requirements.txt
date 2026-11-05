@@ -11,3 +11,5 @@ matplotlib
 seaborn
 pillow
 tqdm
+# Additional dependencies of revision_experiments.py / revision_analysis.py
+imagehash             # perceptual hashing for near-duplicate detection

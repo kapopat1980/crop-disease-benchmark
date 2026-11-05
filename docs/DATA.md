@@ -1,43 +1,44 @@
 # Data
 
 ## Source
-The experiments use the public Kaggle dataset **"20k+ Multi-Class Crop Disease Images"**
-(user `jawadali1045`): <https://www.kaggle.com/datasets/jawadali1045/20k-multi-class-crop-disease-images>
+The experiments use the public Kaggle dataset **"20k+ Multi-Class Crop Disease Images"** (user `jawadali1045`):
+<https://www.kaggle.com/datasets/jawadali1045/20k-multi-class-crop-disease-images> (accessed 1 November 2026).
 
-**The images are not redistributed in this repository.** Download them from Kaggle and respect the licence
-stated on the dataset page (check it before any reuse; the dataset card gives little information on image
-provenance or annotation procedure).
+**The images are not redistributed in this repository.** Download them from Kaggle and respect the licence stated on the
+dataset page. The dataset card gives little information on image provenance or annotation; labels are unverified.
 
-Expected layout after download/unzip (folder names = class labels):
+Expected layout (folder names = class labels):
 ```
 <data_path>/
-├── Train/<class name>/*.jpg          # original training folder
-└── Validation/<class name>/*.jpg     # original validation folder
+├── Train/<class name>/*.jpg
+└── Validation/<class name>/*.jpg
 ```
-The script pools both folders, cleans them and creates its own stratified 70/15/15 split
-(the dataset has no test partition).
 
-## Cleaning (done by the script before splitting)
-1. every file is hashed (MD5) and decoded; unreadable files are dropped;
-2. identical bytes under **different** labels = label conflict → all copies removed;
-3. identical bytes under the same label → one copy kept.
+## Cleaning (audit stage, `revision_experiments.py --stage audit`)
+1. Every file is hashed (MD5) and decoded; unreadable files are dropped (none were found).
+2. Byte-identical images under **different** labels = label conflict → all copies removed (56 files).
+3. Byte-identical images under the same label → one copy kept (3,362 removed).
 
-Result: **15,201 images, 44 classes** (12,170 from the original training folder, 3,031 from validation).
-Only *exact* duplicates are detected; near-duplicates (re-encoded/cropped copies, several photos of one plant)
-are not, and may cross splits — see the limitations in the paper.
+Result: **15,201 images** from 18,619 image files scanned. The per-file log with the reason for every removal is
+`revision_results/audit/cleaning_log.csv`; per-class counts are in `cleaning_per_class.csv`. 53 of the 56 conflicting
+copies involve the three bollworm classes (the same caterpillar photographs filed as American, pink and generic bollworm).
 
-## Split files shipped here (`results/splits/`)
-| file | content |
-|---|---|
-| `file_index.csv` | all 15,201 retained images: `path` (Kaggle path used in the run), `rel_path` (relative to dataset root), `label`, `split` (original folder: `train` = `Train/`, `val` = `Validation/`), `md5` |
-| `split_seed42.csv` | the exact train/val/test assignment used in the paper (`split`, `label_idx`) |
-| `class_names.json` | class names in label-index order |
+## Corrected taxonomy (44 → 42 classes)
+* Merged: `Wheat Brown leaf Rust` + `Wheat Brown leaf rust` → wheat brown (leaf) rust;
+  `Bacterial Blight in cotton` + `bacterial_blight in Cotton` → cotton bacterial blight.
+* Host crop assigned to every class (`revision_results/audit/taxonomy.csv`). `Wilt` and `Leaf Curl` were assigned to cotton
+  by inspection; `Army worm` is crop-unassigned (larvae on broad-leaved and grass hosts).
+* Spelling variants (`Becterial`, `thirps`, `Wheat___Yellow_Rust`) are kept as folder names and normalised only for display.
 
-Use `rel_path` to map the files onto your own copy of the dataset.
+## Near-duplicates and groups
+* Detectors: 64-bit pHash (Hamming distance ≤ 6) and cosine similarity ≥ 0.95 of ImageNet ResNet-50 embeddings.
+* 6,892 pHash pairs, 13,093 embedding pairs (6,357 by both); 7,123 images (47%) in 2,134 groups; largest group 65 images.
+* 68 pairs carry different labels (`revision_results/audit/near_duplicate_pairs.csv`, Supplementary Table S2).
+* 664 files are pre-augmented copies (names starting `contrast_`, `crop_`, `flip_`, `rotation_`, `rescale_`, `zoom_`).
+* Group ids are in `revision_results/audit/master_index.csv` (`group` column); the cross-validation folds keep each group
+  in a single fold (`revision_results/cv_corrected/folds.csv`).
 
-## Known label-taxonomy issues (for anyone reusing the dataset)
-* Capitalisation variants that probably denote the same class: `Wheat Brown leaf Rust` (90 images) vs `Wheat Brown leaf rust` (15); `Bacterial Blight in cotton` (255) vs `bacterial_blight in Cotton` (472).
-* Spelling/style inconsistencies: `Becterial Blight in Rice`, `thirps on  cotton` (misspelling + double space), `Wheat___Yellow_Rust` (underscores), mixed naming conventions across classes.
-* Extremely small classes (3–22 images: `bollrot on Cotton` 3, `bollworm on Cotton` 9, `Wheat Brown leaf rust` 15, `pink bollworm in cotton` 22) → per-class metrics on the test split rest on 1–5 images.
-* At least one image carries an overlaid caption contradicting its label (see Grad-CAM figure in the paper).
-Classes were used **as provided**; they were not merged.
+## Original single split (first version of the study)
+`results/splits/split_seed42.csv` is the stratified 70/15/15 split used in the first version. 1,009 of its 2,281 test
+images have a near-duplicate in the training or validation part
+(`revision_results/audit/orig_test_images_with_neardup.csv`); use it only to reproduce the leakage analysis.

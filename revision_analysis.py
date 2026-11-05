@@ -504,6 +504,44 @@ def mode_cv(args, out):
         print(H.round(2).to_string())
 
 
+def mode_orig_retrain(out):
+    """Accuracy of models retrained on the original split, on test images with vs without a near-duplicate
+    outside the test set (any detector, and hash-confirmed only)."""
+    od = out / "orig_split"
+    sp = pd.read_csv(od / "split.csv")
+    pairs = pd.read_csv(out / "audit" / "near_duplicate_pairs.csv")
+    def leaked(df):
+        df = df[(df.split_i != df.split_j) & df.split_i.notna() & df.split_j.notna()]
+        return set(df[df.split_i == "test"].path_i) | set(df[df.split_j == "test"].path_j)
+    sets = {"any detector": leaked(pairs), "hash-confirmed": leaked(pairs[pairs.hamming.notna()])}
+    rows = []
+    for f in sorted(od.glob("*/seed42/logits.npz")):
+        z = np.load(f)
+        idx = z["test_idx"]
+        y = sp.y.values[idx]
+        P = softmax(z["test_logits"].astype(np.float64))
+        ok = P.argmax(1) == y
+        C = int(sp.y.max()) + 1
+        base = dict(model=f.parent.parent.name, n_test=len(y), accuracy=ok.mean() * 100,
+                    macro_f1=f1_score(y, P.argmax(1), labels=list(range(C)), average="macro", zero_division=0) * 100)
+        for lab, S in sets.items():
+            has = sp.rel_path.values[idx]
+            has = np.array([h in S for h in has])
+            k1, n1, k0, n0 = ok[has].sum(), has.sum(), ok[~has].sum(), (~has).sum()
+            p = stats.fisher_exact([[k1, n1 - k1], [k0, n0 - k0]])[1] if n1 and n0 else np.nan
+            lo1, hi1 = wilson(k1, n1)
+            lo0, hi0 = wilson(k0, n0)
+            rows.append(dict(base, leak_definition=lab, n_leaked=int(n1), acc_leaked=k1 / max(n1, 1) * 100,
+                             acc_leaked_ci=f"[{lo1*100:.1f}, {hi1*100:.1f}]", n_clean=int(n0),
+                             acc_clean=k0 / max(n0, 1) * 100, acc_clean_ci=f"[{lo0*100:.1f}, {hi0*100:.1f}]",
+                             errors_leaked=int(n1 - k1), errors_clean=int(n0 - k0), p_fisher=p))
+    if rows:
+        R = pd.DataFrame(rows)
+        (out / "analysis").mkdir(parents=True, exist_ok=True)
+        R.to_csv(out / "analysis" / "orig_split_leakage_effect.csv", index=False)
+        print(R.round(3).to_string())
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default="./revision_results")
@@ -516,6 +554,8 @@ def main():
     out.mkdir(parents=True, exist_ok=True)
     if a.orig_runs:
         mode_original(a, out / "analysis")
+    if (out / "orig_split" / "split.csv").exists() and (out / "audit" / "near_duplicate_pairs.csv").exists():
+        mode_orig_retrain(out)
     if (out / f"cv_{a.taxonomy}" / "folds.csv").exists():
         mode_cv(a, out)
 

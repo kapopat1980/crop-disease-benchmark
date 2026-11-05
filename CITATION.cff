@@ -1,26 +1,23 @@
 cff-version: 1.2.0
-message: "If you use this code or the result files, please cite the associated paper (and this repository)."
-title: "Crop disease and pest recognition benchmark: code and results"
+message: "If you use this code or the result files, please cite the associated paper and this repository."
+title: "Crop disease and pest recognition: audited, crop-aware benchmark — code, derived data and results"
 type: software
-version: 1.0.0
-date-released: "2026-09-30"
+version: 2.0.0
+date-released: "2026-11-05"
 authors:
-  - family-names: "[TODO: Surname]"
-    given-names: "[TODO: Given name]"
-    orcid: "https://orcid.org/[TODO-0000-0000-0000-0000]"
-    affiliation: "[TODO: Institution, city, country]"
-repository-code: "https://github.com/[TODO-user]/crop-disease-benchmark"
+  - family-names: "Meva"
+    given-names: "Divyakant"
+    affiliation: "Faculty of Computer Applications, Marwadi University, Rajkot, India"
+  - family-names: "Popat"
+    given-names: "Kalpesh"
+    email: "kapopat@gmail.com"
+    affiliation: "Faculty of Computer Applications, Marwadi University, Rajkot, India"
+repository-code: "https://github.com/kapopat1980/crop-disease-benchmark"
 license: MIT
 keywords:
   - plant disease recognition
-  - deep learning
-  - ConvNeXt
-  - Swin Transformer
+  - data leakage
+  - near-duplicate detection
   - class imbalance
+  - group cross-validation
   - model calibration
-# preferred-citation:   # <- uncomment and fill in once the paper has a DOI
-#   type: article
-#   title: "[TODO: paper title]"
-#   journal: "[TODO: journal]"
-#   year: 2026
-#   doi: "[TODO]"

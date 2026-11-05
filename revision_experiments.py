@@ -115,7 +115,7 @@ def crop_of(label: str) -> str:
 
 def parse_args():
     p = argparse.ArgumentParser()
-    p.add_argument("--stage", required=True, choices=["audit", "cv", "hpsweep", "explain"])
+    p.add_argument("--stage", required=True, choices=["audit", "cv", "hpsweep", "explain", "orig"])
     p.add_argument("--data_path", default="/kaggle/input/datasets/jawadali1045/20k-multi-class-crop-disease-images")
     p.add_argument("--output_dir", default="./revision_results")
     p.add_argument("--orig_split", default="results/splits/split_seed42.csv",
@@ -562,6 +562,25 @@ def stage_cv(args, out: Path, device):
                 train_eval(name, v, m, tr, va, te, C, args, device, cvdir / v / cdb.slug(name) / f"fold{k}")
 
 
+def stage_orig(args, out: Path, device):
+    """Retrain the ORIGINAL single split (results/splits/split_seed42.csv, 44 original classes, reference recipe)
+    so that accuracy on test images WITH a near-duplicate outside the test set can be compared with the rest."""
+    base = Path(cdb.find_dataset(argparse.Namespace(data_path=args.data_path)))
+    sp = pd.read_csv(args.orig_split)
+    m = pd.DataFrame({"path": [str(base / r) for r in sp.rel_path], "rel_path": sp.rel_path,
+                      "y": sp.label_idx.astype(int), "split": sp.split})
+    missing = [p for p in m.path if not Path(p).exists()]
+    assert not missing, f"{len(missing)} split files not found under {base}, e.g. {missing[:2]}"
+    C = int(m.y.max()) + 1
+    tr, va, te = (np.where(m.split == s)[0] for s in ["train", "val", "test"])
+    odir = out / "orig_split"
+    odir.mkdir(parents=True, exist_ok=True)
+    m[["rel_path", "y", "split"]].to_csv(odir / "split.csv", index=False)
+    print(f"[orig] train/val/test = {len(tr)}/{len(va)}/{len(te)}, {C} classes")
+    for name in args.models:
+        train_eval(name, "ce_ls", m, tr, va, te, C, args, device, odir / cdb.slug(name) / "seed42")
+
+
 def stage_hpsweep(args, out: Path, device):
     m, classes, _ = load_master(args, out)
     fold = fold_assignment(m, args)
@@ -692,7 +711,7 @@ def main():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     torch.backends.cudnn.benchmark = True
     cdb.save_json(vars(args), out / f"config_{args.stage}.json")
-    {"audit": stage_audit, "cv": stage_cv, "hpsweep": stage_hpsweep, "explain": stage_explain}[args.stage](
+    {"audit": stage_audit, "cv": stage_cv, "hpsweep": stage_hpsweep, "explain": stage_explain, "orig": stage_orig}[args.stage](
         args, out, device)
     print("Done.")
 
