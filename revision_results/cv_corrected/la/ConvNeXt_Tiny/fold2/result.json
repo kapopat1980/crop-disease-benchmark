@@ -1,0 +1,15 @@
+{
+  "model": "ConvNeXt-Tiny",
+  "variant": "la",
+  "lr_backbone": 0.0001,
+  "best_epoch": 24,
+  "epochs_run": 30,
+  "train_time_min": 50.305465785662335,
+  "n_train": 10314,
+  "n_val": 1883,
+  "n_test": 3004,
+  "val_f1": 0.8638712416455683,
+  "val_acc": 0.9591078066914498,
+  "test_f1": 0.8572814105810541,
+  "test_acc": 0.9693741677762983
+}
