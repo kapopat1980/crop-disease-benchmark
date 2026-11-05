@@ -1,0 +1,15 @@
+{
+  "model": "EfficientNetV2-S",
+  "variant": "ce_ls",
+  "lr_backbone": 0.0001,
+  "best_epoch": 6,
+  "epochs_run": 14,
+  "train_time_min": 24.144453152020773,
+  "n_train": 10076,
+  "n_val": 2023,
+  "n_test": 3102,
+  "val_f1": 0.8542031900932672,
+  "val_acc": 0.9619377162629758,
+  "test_f1": 0.8345715138466788,
+  "test_acc": 0.9597034171502257
+}

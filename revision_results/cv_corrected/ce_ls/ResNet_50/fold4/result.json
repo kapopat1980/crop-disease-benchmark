@@ -1,0 +1,15 @@
+{
+  "model": "ResNet-50",
+  "variant": "ce_ls",
+  "lr_backbone": 0.0001,
+  "best_epoch": 11,
+  "epochs_run": 19,
+  "train_time_min": 31.96431285540263,
+  "n_train": 10060,
+  "n_val": 2073,
+  "n_test": 3068,
+  "val_f1": 0.8667853420352972,
+  "val_acc": 0.9580318379160637,
+  "test_f1": 0.8004643603308759,
+  "test_acc": 0.9589308996088657
+}

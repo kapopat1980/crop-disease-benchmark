@@ -1,0 +1,15 @@
+{
+  "model": "Swin-T",
+  "variant": "ce_ls",
+  "lr_backbone": 0.0001,
+  "best_epoch": 14,
+  "epochs_run": 22,
+  "train_time_min": 50.94759910504023,
+  "n_train": 10076,
+  "n_val": 2023,
+  "n_test": 3102,
+  "val_f1": 0.8563543808636537,
+  "val_acc": 0.972318339100346,
+  "test_f1": 0.8469066691530516,
+  "test_acc": 0.9606705351386202
+}
